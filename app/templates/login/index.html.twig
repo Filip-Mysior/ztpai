@@ -1,20 +1,38 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello RegisterController!{% endblock %}
+{% block title %}Login{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/login.css') }}" rel="stylesheet">
+{% endblock %}
+
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<div class="loginContainer">
+    <div class="leftSection">
+        <img src="{{ asset('assets/logo.png') }}" alt="Logo"/>
+    </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/var/www/html/src/Controller/LoginController.php</code></li>
-        <li>Your template at <code>/var/www/html/templates/login/index.html.twig</code></li>
-    </ul>
+    <div class="rightSection">
+        <form class="login" action="login" method="POST">
+            <input name="email" type="text" placeholder="email@email.com">
+            <input name="password" type="password" placeholder="password">
+            <br><br>
+            <button class="loginForm" type="submit">LOGIN</button>
+        </form>
+        <div class="registerContainer">
+            <button id="register" class="loginForm">REGISTER</button>
+        </div>
+    </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("register").onclick = function () {
+            location.href = "register";
+        }
+    });
+</script>
 {% endblock %}

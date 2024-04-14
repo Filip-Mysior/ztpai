@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Fiszlet{% endblock %}
+{% block title %}My Account{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -9,19 +9,14 @@
 
 {% block body %}
 
+<center>
+    <div class="logoutContainer">
+        <button id="logout" onclick="location.href='logout'">LOGOUT</button>
+    </div>
+</center>
+
+<h1>HISTORY</h1>
 <div class="setContainer">
-    <div class="wordSet">
-        <span id="set_id" hidden>1</span>
-        <img src="{{ asset('images/monitor.png') }}">
-        <h1>Monitor</h1>
-        <span>5 words</span>
-    </div>
-    <div class="wordSet">
-        <span id="set_id" hidden>1</span>
-        <img src="{{ asset('images/monitor.png') }}">
-        <h1>Monitor</h1>
-        <span>5 words</span>
-    </div>
     <div class="wordSet">
         <span id="set_id" hidden>1</span>
         <img src="{{ asset('images/monitor.png') }}">

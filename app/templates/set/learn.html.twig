@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Learn{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/learn.css') }}" rel="stylesheet">
+{% endblock %}
+
+
+{% block body %}
+
+<div class="learnContainer">
+<button class="goBack" onclick="window.location.href='/set';">Go back</button>
+    <h2>5 left</h2>
+    <div class="learnWords">
+        <span id="wordEn" class="visible">English Word</span>
+        <span id="wordPl" class="hidden">Polish Word</span>
+    </div>
+    <br>
+    <div class="buttonContainer">
+        <form method="post">
+            <input type="hidden" name="csrfToken" value="<?= $csrfToken ?>">
+            <div class="learnButtonContainer">
+                <button type="submit" name="iKnow">I know</button>
+                <button type="submit" name="iDontKnow">I don't know</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

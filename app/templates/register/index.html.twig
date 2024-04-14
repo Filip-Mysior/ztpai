@@ -1,20 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello RegisterController!{% endblock %}
+{% block title %}Register{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/login.css') }}" rel="stylesheet">
+{% endblock %}
+
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<div class="loginContainer">
+    <div class="leftSection">
+        <img src="{{ asset('assets/logo.png') }}" alt="Logo"/>
+    </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/var/www/html/src/Controller/RegisterController.php</code></li>
-        <li>Your template at <code>/var/www/html/templates/register/index.html.twig</code></li>
-    </ul>
+    <div class="rightSection">
+        <form class="login" action="register" method="POST">
+            <input name="login" type="text" placeholder="username">
+            <input name="email" type="text" placeholder="email@email.com">
+            <input name="password" type="password" placeholder="password">
+            <input name="confirm_password" type="password" placeholder="confirm password">
+            <br><br>
+            <button class="loginForm" type="submit">REGISTER</button>
+        </form>
+    </div>
 </div>
+
 {% endblock %}
