@@ -6,4 +6,5 @@ ztpai - Fiszlet
 ```
 docker ps
 docker exec -it fiszlet-php bash
+php bin/console doctrine:migrations:migrate
 ```
