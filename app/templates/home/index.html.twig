@@ -48,4 +48,12 @@
     </div>
 </div>
 
+
+<h2>User Types</h2>
+<ul>
+    {% for userType in user_types %}
+        <li>{{ userType.type }}</li>
+    {% endfor %}
+</ul>
+
 {% endblock %}

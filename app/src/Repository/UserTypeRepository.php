@@ -8,11 +8,6 @@ use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<UserType>
- *
- * @method UserType|null find($id, $lockMode = null, $lockVersion = null)
- * @method UserType|null findOneBy(array $criteria, array $orderBy = null)
- * @method UserType[]    findAll()
- * @method UserType[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class UserTypeRepository extends ServiceEntityRepository
 {
@@ -45,4 +40,17 @@ class UserTypeRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    /**
+    * Returns all user types.
+    *
+    * @return UserType[] Returns an array of UserType objects
+    */
+    public function findAll(): array
+    {
+        return $this->createQueryBuilder('u')
+            ->orderBy('u.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }
