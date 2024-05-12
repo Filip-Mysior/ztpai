@@ -10,4 +10,7 @@ import { RouterLink } from '@angular/router';
 })
 export class LoginComponent {
 
+    submitForm(): void {
+        console.log("a");
+    }
 }

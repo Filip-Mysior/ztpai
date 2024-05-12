@@ -4,11 +4,11 @@
     </div>
 
     <div class="rightSection">
-        <form class="login" action="login" method="POST">
+        <form class="login">
             <input name="email" type="text" placeholder="email@email.com">
             <input name="password" type="password" placeholder="password">
             <br><br>
-            <button class="loginForm" type="submit">LOGIN</button>
+            <button class="loginForm" type="submit" (click)="submitForm()">LOGIN</button>
         </form>
         <div class="registerContainer">
             <button id="register" class="loginForm" routerLink="/register">REGISTER</button>

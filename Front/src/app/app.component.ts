@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { Component  } from '@angular/core';
 import { RouterOutlet, RouterLink } from '@angular/router';
 
-import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
-import { MyAccountComponent } from './my-account/my-account.component';
-import { SetComponent } from './set/set.component';
+import { HomeComponent } from './pages/home/home.component';
+import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/register/register.component';
+import { MyAccountComponent } from './pages/my-account/my-account.component';
+import { SetComponent } from './pages/set/set.component';
+
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -22,5 +24,25 @@ import { SetComponent } from './set/set.component';
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  title = 'Fiszlet';
+    users: any;
+
+    constructor(private dataService: UserService) { }
+
+    newPost = {
+        "type": "xdd",
+        "users": []
+    };
+
+    ngOnInit(): void {
+        this.dataService.getUsers().subscribe({
+            next: data => {
+                this.users = data['hydra:member'];
+                // console.log(data['hydra:member']);
+            },
+            error: error => {
+                console.error('Error fetching user data:', error);
+            }
+        });
+    }
+
 }

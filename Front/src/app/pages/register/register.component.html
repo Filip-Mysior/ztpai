@@ -1,0 +1,64 @@
+<div class="loginContainer">
+    <div class="leftSection">
+        <img src="assets/logo.png" alt="Logo"/>
+    </div>
+
+    <div class="rightSection">
+        <form class="login" [formGroup]="registerForm">
+            <div class="formElement">
+                <input formControlName="login" type="text" placeholder="username">
+                @if (submitted && f['login'].errors) {
+                    <div class="invalid-feedback d-block">
+                        @if (f['login'].errors['required']) {
+                            <div>Username is required</div>
+                        }
+                    </div>
+                }
+            </div>
+
+            <div class="formElement">
+                <input formControlName="email" type="text" placeholder="email@email.com">
+                @if (submitted && f['email'].errors) {
+                    <div class="invalid-feedback d-block">
+                        @if (f['email'].errors['required']) {
+                            <div>Email is required</div>
+                        } @if (f['email'].errors['pattern']) {
+                            <div>Email is invalid</div>
+                        }
+                    </div>
+                }
+            </div>
+
+            <div class="formElement">
+                <input formControlName="password" type="password" placeholder="password">
+                @if (submitted && f['password'].errors) {
+                    <div class="invalid-feedback d-block">
+                        @if (f['password'].errors['required']) {
+                            <div>Password is required</div>
+                        } @if (f['password'].errors['minlength']) {
+                            <div>Password must be at least 4 characters</div>
+                        } @if (f['password'].errors['maxlength']) {
+                            <div>Password must not exceed 40 characters</div>
+                        }
+                    </div>
+                }
+            </div>
+
+            <div class="formElement">
+                <input formControlName="confirmPassword" type="password" placeholder="confirm password">
+                @if (submitted && f['confirmPassword'].errors) {
+                    <div class="invalid-feedback d-block">
+                        @if (f['confirmPassword'].errors['required']) {
+                            <div>Confirm Password is required</div>
+                        } @if (f['confirmPassword'].errors['matching']) {
+                            <div>Confirm Password does not match</div>
+                        }
+                    </div>
+                }
+            </div>
+
+            <br><br>
+            <button class="loginForm" type="submit" (click)="submitForm()">REGISTER</button>
+        </form>
+    </div>
+</div>

@@ -10,3 +10,13 @@
 <div class="mainContent">
     <router-outlet></router-outlet>
 </div>
+
+
+<div>
+    @for (user of users; track user) {
+        <p>User ID: {{ user.id }}</p>
+        <p>User ID: {{ user.login }}</p>
+        <p>User ID: {{ user.email }}</p>
+        <br>
+    }
+</div>
