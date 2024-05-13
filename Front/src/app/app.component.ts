@@ -7,7 +7,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { MyAccountComponent } from './pages/my-account/my-account.component';
 import { SetComponent } from './pages/set/set.component';
 
-import { UserService } from './services/user.service';
+import { SecurityService } from './services/security.service';
 
 @Component({
   selector: 'app-root',
@@ -24,9 +24,10 @@ import { UserService } from './services/user.service';
   styleUrl: './app.component.css',
 })
 export class AppComponent {
+    title = "Fiszlet";
     users: any;
 
-    constructor(private dataService: UserService) { }
+    constructor(private dataService: SecurityService) { }
 
     newPost = {
         "type": "xdd",

@@ -6,9 +6,10 @@ import { catchError } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class SecurityService {
     private api = 'http://localhost:8000/api/users';
     private regApi = 'http://localhost:8000/api/register';
+    private logApi = 'http://localhost:8000/api/login';
 
     constructor(private http: HttpClient) { }
 
@@ -28,6 +29,22 @@ export class UserService {
             catchError(error => {
                 console.error('Error adding user:', error);
                 return throwError(()=> new Error('Failed to add user.'));
+            })
+        );
+    }
+
+    loginUser(User: any): Observable<any> {
+        const options = {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            mode: 'no-cors',
+          };
+        
+        return this.http.post<any>(`${this.logApi}`, User, options).pipe(
+            catchError(error => {
+                console.error('Error loggin in:', error);
+                return throwError(()=> new Error('Invalid credentials.'));
             })
         );
     }

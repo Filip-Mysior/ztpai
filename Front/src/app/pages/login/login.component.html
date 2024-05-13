@@ -4,10 +4,37 @@
     </div>
 
     <div class="rightSection">
-        <form class="login">
-            <input name="email" type="text" placeholder="email@email.com">
-            <input name="password" type="password" placeholder="password">
+        <form class="login" [formGroup]="loginForm">
+            <div class="formElement">
+                <input formControlName="email" type="text" placeholder="email@email.com">
+                @if (submitted && f['email'].errors) {
+                    <div class="invalid-feedback d-block">
+                        @if (f['email'].errors['required']) {
+                            <div>Email is required</div>
+                        } @if (f['email'].errors['pattern']) {
+                            <div>Email is invalid</div>
+                        }
+                    </div>
+                }
+            </div>
+
+            <div class="formElement">
+                <input formControlName="password" type="password" placeholder="password">
+                @if (submitted && f['password'].errors) {
+                    <div class="invalid-feedback d-block">
+                        @if (f['password'].errors['required']) {
+                            <div>Password is required</div>
+                        } @if (f['password'].errors['minlength']) {
+                            <div>Password must be at least 4 characters</div>
+                        } @if (f['password'].errors['maxlength']) {
+                            <div>Password must not exceed 40 characters</div>
+                        }
+                    </div>
+                }
+            </div>
+
             <br><br>
+            <h2>{{ loginMsg }}</h2>
             <button class="loginForm" type="submit" (click)="submitForm()">LOGIN</button>
         </form>
         <div class="registerContainer">
