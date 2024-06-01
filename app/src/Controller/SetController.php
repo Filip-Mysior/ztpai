@@ -4,23 +4,42 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Entity\Set;
+use App\Entity\Word;
+use Doctrine\ORM\EntityManagerInterface;
 
 class SetController extends AbstractController
 {
-    #[Route('/set', name: 'app_set')]
-    public function index(): Response
+    #[Route('/api/sets/basic/{id}', name: 'api_sets_basic', methods: ['GET'])]
+    public function getSet(int $id, EntityManagerInterface $entityManager): JsonResponse
     {
-        return $this->render('set/index.html.twig', [
-            'controller_name' => 'SetController',
-        ]);
+        $set = $entityManager->getRepository(Set::class)->find($id);
+
+        if (!$set) {
+            return new JsonResponse(['error' => 'Set not found'], JsonResponse::HTTP_NOT_FOUND);
+        }
+
+        $responseData = [
+            'set_name' => $set->getName(),
+            'word_count' => $set->getWordCount(),
+            'image' => $image ? [
+                'id' => $image->getId(),
+                'image_name' => $image->getImageName()
+            ] : null,
+            'words' => []
+        ];
+
+        foreach ($set->getWords() as $word) {
+            $responseData['words'][] = [
+                'word_id' => $word->getId(),
+                'word_en' => $word->getWordEn(),
+                'word_pl' => $word->getWordPl()
+            ];
+        }
+
+        return new JsonResponse($responseData, JsonResponse::HTTP_OK);
     }
 
-    #[Route('/set/learn', name: 'app_set_learn')]
-    public function learn(): Response
-    {
-        return $this->render('set/learn.html.twig', [
-            'controller_name' => 'SetController',
-        ]);
-    }
 }

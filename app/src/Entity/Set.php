@@ -20,8 +20,9 @@ class Set
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $image = null;
+    #[ORM\OneToOne(targetEntity: Image::class, cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Image $image = null;
 
     #[ORM\Column]
     private ?int $word_count = 0;
@@ -59,12 +60,12 @@ class Set
         return $this;
     }
 
-    public function getImage(): ?string
+    public function getImage(): ?Image
     {
         return $this->image;
     }
 
-    public function setImage(string $image): static
+    public function setImage(?Image $image): static
     {
         $this->image = $image;
 
