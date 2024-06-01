@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Word
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: "SEQUENCE")]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
     #[ORM\Column]
     private ?int $id = null;
 

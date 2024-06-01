@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Set
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: "SEQUENCE")]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
     #[ORM\Column]
     private ?int $id = null;
 
@@ -24,7 +24,7 @@ class Set
     private ?string $image = null;
 
     #[ORM\Column]
-    private ?int $word_count = null;
+    private ?int $word_count = 0;
 
     #[ORM\ManyToOne(inversedBy: 'sets')]
     #[ORM\JoinColumn(nullable: false)]
@@ -39,6 +39,7 @@ class Set
     public function __construct()
     {
         $this->words = new ArrayCollection();
+        $this->word_count = 0;
     }
 
     public function getId(): ?int
@@ -106,6 +107,7 @@ class Set
     {
         if (!$this->words->contains($word)) {
             $this->words->add($word);
+            $this->word_count++;
         }
 
         return $this;
@@ -114,6 +116,7 @@ class Set
     public function removeWord(Word $word): static
     {
         $this->words->removeElement($word);
+        $this->word_count--;
 
         return $this;
     }
