@@ -101,6 +101,20 @@ a {
     text-decoration: none;
 }
 
+.actionsContainer {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.addElement {
+    background-color: green;
+}
+
+.deleteElement {
+    background-color: red;
+}
+
 .setContainer {
     display: flex;
     flex-wrap: wrap;
@@ -139,6 +153,18 @@ a {
 .formElement {
     width: 100%;
     text-align: center;
+}
+
+.modal-content {
+    background: linear-gradient(to bottom, var(--primaryBGColor), var(--secondaryBGColor));
+    border: 1px solid;
+    font-size: 1.2em;
+    text-align: center;
+}
+
+.modal-header,
+.modal-body {
+    border: 0;
 }
 
 .invalid-feedback {

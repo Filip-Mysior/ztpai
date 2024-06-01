@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { RouterLink, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+
+import { SetService } from '../../services/set.service';
+import { ImageService } from '../../services/image.service';
 
 @Component({
   selector: 'app-set',
@@ -10,10 +13,39 @@ import { Location } from '@angular/common';
   styleUrl: './set.component.css'
 })
 export class SetComponent {
-
-    constructor(private location: Location) {}
+    set: any = {};
+    setId: number = 0;
+    
+    constructor(
+        private location: Location,
+        private setService: SetService,
+        private imageService: ImageService,
+        private route: ActivatedRoute,
+    ) {}
 
     goBack() {
         this.location.back();
-      }
+    }
+
+    ngOnInit(): void {
+        this.route.params.subscribe(params => {
+            this.setId = +params['id'];
+            this.loadSet();
+        });
+    }
+
+    loadSet(): void {
+        this.setService.getSet(this.setId).subscribe({
+            next: data => {
+                this.set = data;
+            },
+            error: error => {
+                console.error('Error fetching set data:', error);
+            }
+        });
+    }
+
+    getImageUrl(imageId: number): string {
+        return this.imageService.getImageUrl(imageId);
+    }
 }

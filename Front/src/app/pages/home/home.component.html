@@ -1,38 +1,18 @@
-<div class="setContainer">
-    <div class="wordSet">
-        <span id="set_id" hidden>1</span>
-        <img src="assets/images/monitor.png">
-        <h1>Monitor</h1>
-        <span>5 words</span>
-    </div>
-    <div class="wordSet">
-        <span id="set_id" hidden>1</span>
-        <img src="assets/images/monitor.png">
-        <h1>Monitor</h1>
-        <span>5 words</span>
-    </div>
-    <div class="wordSet">
-        <span id="set_id" hidden>1</span>
-        <img src="assets/images/monitor.png">
-        <h1>Monitor</h1>
-        <span>5 words</span>
-    </div>
-    <div class="wordSet">
-        <span id="set_id" hidden>1</span>
-        <img src="assets/images/monitor.png">
-        <h1>Monitor</h1>
-        <span>5 words</span>
-    </div>
-    <div class="wordSet">
-        <span id="set_id" hidden>1</span>
-        <img src="assets/images/monitor.png">
-        <h1>Monitor</h1>
-        <span>5 words</span>
-    </div>
-    <div class="wordSet">
-        <span id="set_id" hidden>1</span>
-        <img src="assets/images/monitor.png">
-        <h1>Monitor</h1>
-        <span>5 words</span>
-    </div>
+<div class="actionsContainer">
+    <button class="addElement" (click)="openAddSetModal()">
+        Add Set
+    </button>    
 </div>
+
+<div class="setContainer">
+    @for (set of sets; track set) {
+        <div class="wordSet" (click)="goToSetPage(set.id)">
+            <img [src]="getImageUrl(set.image)" alt="Set Image">
+            <h1>{{ set.set_name }}</h1>
+            <span>{{ set.word_count }} words</span>
+            <button class="deleteElement" (click)="deleteSet(set.id, $event)">Delete</button>
+        </div>
+    }
+</div>
+
+<app-add-set-modal></app-add-set-modal>
