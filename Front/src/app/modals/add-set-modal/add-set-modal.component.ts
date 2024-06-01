@@ -10,11 +10,11 @@ if (typeof window !== "undefined") {
 }
 
 @Component({
-  selector: 'app-add-set-modal',
-  standalone: true,
-  imports: [],
-  templateUrl: './add-set-modal.component.html',
-  styleUrls: ['./add-set-modal.component.css']
+    selector: 'app-add-set-modal',
+    standalone: true,
+    imports: [],
+    templateUrl: './add-set-modal.component.html',
+    styleUrls: ['./add-set-modal.component.css']
 })
 export class AddSetModalComponent implements AfterViewInit {
     @ViewChild('modal') modal?: ElementRef;
@@ -54,13 +54,6 @@ export class AddSetModalComponent implements AfterViewInit {
         if (file) {
             const formData = new FormData();
             formData.append('image', file);
-            console.log(formData);
-            console.log('FormData:');
-            const formDataObj: { [key: string]: any } = {};
-            formData.forEach((value, key) => {
-                formDataObj[key] = value;
-            });
-            console.log(formDataObj);
             this.imageService.uploadImage(formData).subscribe(
                 response => {
                     const setFormData = new FormData();

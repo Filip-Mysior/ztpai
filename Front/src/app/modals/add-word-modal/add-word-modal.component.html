@@ -1,0 +1,18 @@
+<div  #modal  class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" id="exampleModalLabel">Add Word</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form (submit)="submitForm($event)">
+                    <input name="word_en" type="text" placeholder="English word" required>
+                    <input name="word_pl" type="text" placeholder="Polish word" required>
+            
+                    <button type="submit">Add Word</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

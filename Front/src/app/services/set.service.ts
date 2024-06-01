@@ -4,7 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 @Injectable({
-providedIn: 'root'
+    providedIn: 'root'
 })
 export class SetService {
     private api = 'http://localhost:8000/api/sets/basic';
