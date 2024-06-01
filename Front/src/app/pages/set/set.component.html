@@ -6,10 +6,22 @@
     </div>
     <div class="actions">
         <button class="addElement" (click)="openAddWordModal()">Add Word</button>
-        <button id="learn" routerLink="/learn">START LEARNING</button>
+        <button id="learn" (click)="goToLearnPage()">START LEARNING</button>
         <p>{{ set.word_count }} Words</p>
     </div>
 </div>
+
+@if (unknownWords.length > 0) {
+    <h2>Words You Didn't Know:</h2>
+    <div class="wordsContainer">
+        @for (word of unknownWords; track word) {
+            <div class="word">
+                <span id="wordEn">{{ word.word_en }}</span>
+                <span id="wordPl">{{ word.word_pl }}</span>
+            </div>
+        }
+    </div>
+}
 
 <div class="wordsContainer">
     @for (word of set.words; track word) {

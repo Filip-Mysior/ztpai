@@ -116,8 +116,9 @@ class Set
 
     public function removeWord(Word $word): static
     {
-        $this->words->removeElement($word);
-        $this->word_count--;
+        if ($this->words->removeElement($word)) {
+            $this->word_count--;
+        }
 
         return $this;
     }

@@ -15,5 +15,6 @@ export const routes: Routes = [
     { path:'set', component: SetComponent },
     { path:'set/:id', component: SetComponent },
     { path:'learn', component: LearnComponent },
+    { path:'learn/:id', component: LearnComponent },
     { path: '**', redirectTo: '' },
 ];

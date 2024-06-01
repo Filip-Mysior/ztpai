@@ -13,7 +13,6 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class WordController extends AbstractController
 {
-
     #[Route('/api/words/basic/add', name: 'api_words_create', methods: ['POST'])]
     public function createWord(Request $request, EntityManagerInterface $entityManager): JsonResponse
     {
@@ -38,5 +37,30 @@ class WordController extends AbstractController
         $entityManager->flush();
 
         return new JsonResponse(['id' => $word->getId()], JsonResponse::HTTP_CREATED);
+    }
+
+
+    #[Route('/api/words/set/{id}', name: 'api_words_in_set', methods: ['GET'])]
+    public function getWordsInSet(int $id, EntityManagerInterface $entityManager): JsonResponse
+    {
+        $set = $entityManager->getRepository(Set::class)->find($id);
+
+        if (!$set) {
+            return new JsonResponse(['error' => 'Set not found'], JsonResponse::HTTP_NOT_FOUND);
+        }
+
+        $responseData = [];
+
+        foreach ($set->getWords() as $word) {
+            $responseData[] = [
+                'word_id' => $word->getId(),
+                'word_en' => $word->getWordEn(),
+                'word_pl' => $word->getWordPl()
+            ];
+        }
+
+        shuffle($responseData);
+
+        return new JsonResponse($responseData, JsonResponse::HTTP_CREATED);
     }
 }

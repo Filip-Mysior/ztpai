@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { RouterLink, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { SetService } from '../../services/set.service';
@@ -11,12 +11,13 @@ import { AddWordModalComponent } from '../../modals/add-word-modal/add-word-moda
 @Component({
   selector: 'app-set',
   standalone: true,
-  imports: [RouterLink, AddWordModalComponent],
+  imports: [AddWordModalComponent],
   templateUrl: './set.component.html',
   styleUrl: './set.component.css'
 })
 export class SetComponent {
     set: any = {};
+    unknownWords: any[] = [];
     setId: number = 0;
     @ViewChild(AddWordModalComponent) addWordModal?: AddWordModalComponent;
     
@@ -26,16 +27,24 @@ export class SetComponent {
         private wordService: WordService,
         private imageService: ImageService,
         private route: ActivatedRoute,
+        private router: Router,
     ) {}
 
     goBack() {
-        this.location.back();
+        this.router.navigate(['/']);
     }
 
     ngOnInit(): void {
         this.route.params.subscribe(params => {
             this.setId = +params['id'];
             this.loadSet();
+        });
+        
+        this.route.queryParams.subscribe(params => {
+            if (params['unknownWords']) {
+                this.unknownWords = JSON.parse(params['unknownWords']);
+                console.log('Unknown Words:', this.unknownWords);
+            }
         });
     }
 
@@ -52,6 +61,10 @@ export class SetComponent {
 
     openAddWordModal() {
         this.addWordModal?.openModal();
+    }
+
+    goToLearnPage() {
+        this.router.navigate(['/learn', this.setId]);
     }
 
     getImageUrl(imageId: number): string {
