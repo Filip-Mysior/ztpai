@@ -5,6 +5,7 @@ import { debounceTime } from 'rxjs/operators';
 
 import { SetService } from '../../services/set.service';
 import { ImageService } from '../../services/image.service';
+import { UserService } from '../../services/user.service';
 
 import { AddSetModalComponent } from '../../modals/add-set-modal/add-set-modal.component';
 
@@ -26,6 +27,7 @@ export class HomeComponent implements OnInit {
     constructor(
         private setService: SetService,
         private imageService: ImageService,
+        private userService: UserService,
         private router: Router,
     ) {}
 
@@ -82,5 +84,13 @@ export class HomeComponent implements OnInit {
                 console.error('Error deleting set:', error);
             }
         });
+    }
+
+    public isUserLoggedIn(): boolean {
+        return this.userService.isUserLoggedIn();
+    }
+
+    public isUserAdmin(): boolean {
+        return this.userService.isUserAdmin();
     }
 }

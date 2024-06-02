@@ -1,10 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
 
 import { SetService } from '../../services/set.service';
 import { WordService } from '../../services/word.service';
 import { ImageService } from '../../services/image.service';
+import { UserService } from '../../services/user.service';
 
 import { AddWordModalComponent } from '../../modals/add-word-modal/add-word-modal.component';
 
@@ -22,10 +22,10 @@ export class SetComponent {
     @ViewChild(AddWordModalComponent) addWordModal?: AddWordModalComponent;
     
     constructor(
-        private location: Location,
         private setService: SetService,
         private wordService: WordService,
         private imageService: ImageService,
+        private userService: UserService,
         private route: ActivatedRoute,
         private router: Router,
     ) {}
@@ -81,5 +81,13 @@ export class SetComponent {
                 console.error('Error deleting word:', error);
             }
         });
+    }
+    
+    public isUserLoggedIn(): boolean {
+        return this.userService.isUserLoggedIn();
+    }
+
+    public isUserAdmin(): boolean {
+        return this.userService.isUserAdmin();
     }
 }

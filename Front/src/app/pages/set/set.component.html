@@ -5,7 +5,9 @@
         <button class="goBack" (click)="goBack()">Go back</button>
     </div>
     <div class="actions">
-        <button class="addElement" (click)="openAddWordModal()">Add Word</button>
+        @if (isUserAdmin()) {
+            <button class="addElement" (click)="openAddWordModal()">Add Word</button>
+        }
         <button id="learn" (click)="goToLearnPage()">START LEARNING</button>
         <p>{{ set.word_count }} Words</p>
     </div>
@@ -21,6 +23,8 @@
             </div>
         }
     </div>
+} @else {
+    <h2>Perfect score! You know everything!</h2>
 }
 
 <div class="wordsContainer">
@@ -28,7 +32,9 @@
         <div class="word">
             <span id="wordEn">{{ word.word_en }}</span>
             <span id="wordPl">{{ word.word_pl }}</span>
-            <button class="deleteElement" (click)="deleteWord(word.word_id, $event)">Delete</button>
+            @if (isUserAdmin()) {
+                <button class="deleteElement" (click)="deleteWord(word.word_id, $event)">Delete</button>
+            }
         </div>
     }
 </div>

@@ -7,14 +7,14 @@ import { MyAccountComponent } from './pages/my-account/my-account.component';
 import { SetComponent } from './pages/set/set.component';
 import { LearnComponent } from './pages/learn/learn.component';
 
+import { authGuard, loggedInAuthGuard } from './services/auth.guard';
+
 export const routes: Routes = [
     { path: '', component: HomeComponent },
-    { path: 'login', component: LoginComponent, },
-    { path:'register', component: RegisterComponent },
-    { path:'my-account', component: MyAccountComponent },
-    { path:'set', component: SetComponent },
+    { path: 'login', component: LoginComponent, canActivate: [loggedInAuthGuard] },
+    { path:'register', component: RegisterComponent, canActivate: [loggedInAuthGuard] },
+    { path:'my-account', component: MyAccountComponent, canActivate: [authGuard] },
     { path:'set/:id', component: SetComponent },
-    { path:'learn', component: LearnComponent },
     { path:'learn/:id', component: LearnComponent },
     { path: '**', redirectTo: '' },
 ];

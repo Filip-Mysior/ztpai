@@ -79,9 +79,9 @@ export class RegisterComponent {
         this.securityService.addUser(formData).subscribe({
             next: response => {
                 this.registerMsg = "Registered successfully, redirecting...";
-                setTimeout(() => {
-                    this.router.navigate(['/login']);
-                }, 1000);
+                // setTimeout(() => {
+                this.router.navigate(['/login']);
+                // }, 1000);
             },
             error: error => {
                 this.registerMsg = "Error registering, please try again later.";

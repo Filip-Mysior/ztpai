@@ -1,24 +1,15 @@
 <header>
-    <a routerLink="">Home</a>
-    <a routerLink="/login">Login</a><br>
-    <a routerLink="/register">Register</a>
-    <a routerLink="/my-account">My Account</a>
+    <a (click)="redirectTo('')">Home</a>
+    @if (!isUserLoggedIn()) {
+        <a (click)="redirectTo('login')">Login</a><br>
+        <a (click)="redirectTo('register')">Register</a>
+    }
+    @if (isUserLoggedIn()) {
+        <a (click)="redirectTo('my-account')">My Account</a>
+        <a (click)="logout()">Logout</a>
+    }
 </header>
 
 <div class="mainContent">
     <router-outlet></router-outlet>
 </div>
-
-
-<!--
-<div>
-    @for (user of users; track user) {
-        <p>User ID: {{ user.id }}</p>
-        <p>User ID: {{ user.login }}</p>
-        <p>User ID: {{ user.email }}</p>
-        <br>
-    }
-</div>
--->
-
-<!-- <app-add-set-modal></app-add-set-modal> -->

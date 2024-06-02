@@ -95,6 +95,7 @@ input::placeholder{
 }
 
 a {
+    cursor: pointer;
     padding: 10pt;
     margin: 10pt;
     color: var(--primaryColor);

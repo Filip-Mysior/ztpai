@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bundle\SecurityBundle\Security;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,11 +18,13 @@ class SecurityController extends AbstractController
 {
     private $entityManager;
     private $passwordHasher;
+    private $security;
 
-    public function __construct(EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher)
+    public function __construct(EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, Security $security)
     {
         $this->entityManager = $entityManager;
         $this->passwordHasher = $passwordHasher;
+        $this->security = $security;
     }
     
 
@@ -78,11 +81,33 @@ class SecurityController extends AbstractController
 
         $responseData = [
            'message' => 'Successfully logged in',
-           'userId' => $user->getId(),
            'token' => $token,
         ];
 
         return new JsonResponse($responseData, JsonResponse::HTTP_CREATED);
+    }
 
+
+    #[Route('/api/me', name: 'api_me', methods: ['GET'])]
+    public function getCurrentUser(): JsonResponse
+    {
+        $user = $this->security->getUser();
+
+        if (!$user) {
+            return $this->json([
+                'message' => 'User not found',
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        $isAdmin = \in_array('ROLE_ADMIN', $user->getRoles(), true);
+
+        $responseData = [
+            'id' => $user->getId(),
+            'login' => $user->getLogin(),
+            'email' => $user->getEmail(),
+            'adminPrivileges' => $isAdmin,
+        ];
+
+        return new JsonResponse($responseData, JsonResponse::HTTP_OK);
     }
 }

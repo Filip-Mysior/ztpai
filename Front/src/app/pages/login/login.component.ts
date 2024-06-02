@@ -9,6 +9,7 @@ import { AbstractControl,
 } from '@angular/forms';
 
 import { SecurityService } from '../../services/security.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -28,6 +29,7 @@ export class LoginComponent {
 
     constructor(
         private securityService: SecurityService,
+        private userService: UserService,
         private formBuilder: FormBuilder,
         private router: Router,
     ) { }
@@ -68,10 +70,12 @@ export class LoginComponent {
         
         this.securityService.loginUser(formData).subscribe({
             next: response => {
-                this.loginMsg = "Logged in successfully, redirecting...   " + response.userId + "   " + response.token;
-                setTimeout(() => {
-                    this.router.navigate(['/']);
-                }, 1000);
+                // this.loginMsg = "Logged in successfully, redirecting...   " + response.userId + "   " + response.token;
+                localStorage.setItem('authToken', response.token);
+                this.userService.notifyUserLoggedIn();
+                // setTimeout(() => {
+                this.router.navigate(['/']);
+                // }, 1000);
             },
             error: error => {
                 this.loginMsg = "Error logging in.";
