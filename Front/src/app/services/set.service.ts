@@ -47,4 +47,13 @@ export class SetService {
           })
         );
     }
+
+    searchSets(searchTerm: string): Observable<any> {
+        return this.http.get<any>(`${this.apiDel}/search/name?name=${searchTerm}`).pipe(
+            catchError(error => {
+                console.error('Error searching sets:', error);
+                return throwError(() => new Error('Failed to search sets.'));
+            })
+        );
+    }
 }

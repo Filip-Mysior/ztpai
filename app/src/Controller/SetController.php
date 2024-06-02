@@ -112,4 +112,45 @@ class SetController extends AbstractController
 
         return new JsonResponse(['id' => $set->getId()], JsonResponse::HTTP_CREATED);
     }
+
+
+    #[Route('/api/sets/search/name', name: 'api_sets_search', methods: ['GET'])]
+    public function searchSetsByName(Request $request, EntityManagerInterface $entityManager): JsonResponse
+    {
+        $searchName = $request->query->get('name', '');
+
+        $queryBuilder = $entityManager->getRepository(Set::class)->createQueryBuilder('s');
+
+        if ($searchName !== '') {
+            $queryBuilder->andWhere('LOWER(s.name) LIKE LOWER(:name)')
+                         ->setParameter('name', '%' . strtolower($searchName) . '%');
+        }
+
+        $sets = $queryBuilder->getQuery()->getResult();
+
+        $responseData = [];
+
+        foreach ($sets as $set) {
+            $wordsData = [];
+            $image = $set->getImage();
+
+            foreach ($set->getWords() as $word) {
+                $wordsData[] = [
+                    'word_id' => $word->getId(),
+                    'word_en' => $word->getWordEn(),
+                    'word_pl' => $word->getWordPl()
+                ];
+            }
+
+            $responseData[] = [
+                'id' => $set->getId(),
+                'set_name' => $set->getName(),
+                'word_count' => $set->getWordCount(),
+                'image' => $image ? $image->getId() : null,
+                'words' => $wordsData
+            ];
+        }
+
+        return new JsonResponse($responseData, JsonResponse::HTTP_OK);
+    }
 }
