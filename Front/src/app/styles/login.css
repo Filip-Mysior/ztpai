@@ -33,7 +33,7 @@
 }
 
 .registerContainer {
-    width: 80%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -41,7 +41,7 @@
 }
 
 .login {
-    width: 80%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;

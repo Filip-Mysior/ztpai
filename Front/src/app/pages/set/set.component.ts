@@ -19,6 +19,7 @@ export class SetComponent {
     set: any = {};
     unknownWords: any[] = [];
     setId: number = 0;
+    afterLearn = false;
     @ViewChild(AddWordModalComponent) addWordModal?: AddWordModalComponent;
     
     constructor(
@@ -43,7 +44,7 @@ export class SetComponent {
         this.route.queryParams.subscribe(params => {
             if (params['unknownWords']) {
                 this.unknownWords = JSON.parse(params['unknownWords']);
-                console.log('Unknown Words:', this.unknownWords);
+                this.afterLearn = params['afterLearn'];
             }
         });
     }

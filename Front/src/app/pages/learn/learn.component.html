@@ -1,5 +1,5 @@
 <div class="learnContainer">
-    <button class="goBack" (click)="goToSetPage()">Go back</button>
+    <button class="goBack" (click)="goToSetPage(false)">Go back</button>
     <h2>{{ words.length - currentIndex }} left</h2>
     <div class="learnWords" (click)="toggleWordVisibility()">
         <span id="wordEn" [class.visible]="isEnglishVisible" [class.hidden]="!isEnglishVisible">{{ currentWord?.word_en }}</span>

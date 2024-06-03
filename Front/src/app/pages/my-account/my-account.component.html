@@ -1,31 +1,18 @@
 <div class="logoutContainer">
-    <button id="logout">LOGOUT</button>
+    <h1>HISTORY</h1>
+    <div class="searchBar">
+        <form [formGroup]="searchForm">
+            <input formControlName="searchControl" placeholder="Search">
+        </form>
+    </div>
 </div>
 
-<h1>HISTORY</h1>
 <div class="setContainer">
-    <div class="wordSet">
-        <span id="set_id" hidden>1</span>
-        <img src="assets/images/monitor.png">
-        <h1>Monitor</h1>
-        <span>5 words</span>
-    </div>
-    <div class="wordSet">
-        <span id="set_id" hidden>1</span>
-        <img src="assets/images/monitor.png">
-        <h1>Monitor</h1>
-        <span>5 words</span>
-    </div>
-    <div class="wordSet">
-        <span id="set_id" hidden>1</span>
-        <img src="assets/images/monitor.png">
-        <h1>Monitor</h1>
-        <span>5 words</span>
-    </div>
-    <div class="wordSet">
-        <span id="set_id" hidden>1</span>
-        <img src="assets/images/monitor.png">
-        <h1>Monitor</h1>
-        <span>5 words</span>
-    </div>
+    @for (set of sets; track set) {
+        <div class="wordSet" (click)="goToSetPage(set.id)">
+            <img [src]="getImageUrl(set.image)" alt="Set Image">
+            <h1>{{ set.set_name }}</h1>
+            <span>{{ set.word_count }} words</span>
+        </div>
+    }
 </div>

@@ -5,8 +5,16 @@
         <a (click)="redirectTo('register')">Register</a>
     }
     @if (isUserLoggedIn()) {
-        <a (click)="redirectTo('my-account')">My Account</a>
-        <a (click)="logout()">Logout</a>
+        <a display="none" (click)="toggleDropdown()">
+            <img src="assets/profile.png">
+        </a>
+        @if (dropdownOpen) { 
+            <div class="dropdown-menu">
+                <a (click)="redirectTo('my-account')">Go to Profile</a>
+                <a (click)="logout()">Logout</a>
+            </div>
+        }
+        <!-- <a (click)="logout()">Logout</a> -->
     }
 </header>
 

@@ -16,6 +16,7 @@ export class LearnComponent {
     currentIndex: number = 0;
     unknownWords: any[] = [];
     isEnglishVisible: boolean = true;
+    afterLearn: boolean = true;
 
     constructor(
         private route: ActivatedRoute,
@@ -31,12 +32,14 @@ export class LearnComponent {
         });
     }
 
-    goToSetPage() {
+    goToSetPage(afterLearn: boolean) {
         this.router.navigate(['/set', this.setId], {
-            queryParams: { unknownWords: JSON.stringify(this.unknownWords) }
+            queryParams: {
+                unknownWords: JSON.stringify(this.unknownWords),
+                afterLearn: afterLearn
+            }
         });
     }
-    
 
     loadWords(): void {
         this.wordService.getWordsInSet(this.setId).subscribe({
@@ -60,7 +63,7 @@ export class LearnComponent {
         }
         this.currentIndex++;
         if (this.currentIndex >= this.words.length) {
-            this.goToSetPage();
+            this.goToSetPage(true);
         } else {
             this.isEnglishVisible = true;
         }

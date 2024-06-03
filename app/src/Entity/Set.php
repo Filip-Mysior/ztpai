@@ -37,9 +37,13 @@ class Set
     #[ORM\ManyToMany(targetEntity: Word::class, inversedBy: 'sets')]
     private Collection $words;
 
+    #[ORM\OneToMany(mappedBy: 'set', targetEntity: SetHistory::class, cascade: ['remove'], orphanRemoval: true)]
+    private Collection $setHistories;
+
     public function __construct()
     {
         $this->words = new ArrayCollection();
+        $this->setHistories = new ArrayCollection();
         $this->word_count = 0;
     }
 
@@ -118,6 +122,32 @@ class Set
     {
         if ($this->words->removeElement($word)) {
             $this->word_count--;
+        }
+
+        return $this;
+    }
+
+    public function getSetHistories(): Collection
+    {
+        return $this->setHistories;
+    }
+
+    public function addSetHistory(SetHistory $setHistory): static
+    {
+        if (!$this->setHistories->contains($setHistory)) {
+            $this->setHistories->add($setHistory);
+            $setHistory->setSet($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSetHistory(SetHistory $setHistory): static
+    {
+        if ($this->setHistories->removeElement($setHistory)) {
+            if ($setHistory->getSet() === $this) {
+                $setHistory->setSet(null);
+            }
         }
 
         return $this;

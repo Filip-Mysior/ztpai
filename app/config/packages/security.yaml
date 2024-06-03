@@ -45,6 +45,7 @@ security:
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
         - { path: ^/api/register, roles: PUBLIC_ACCESS }
         - { path: ^/api/sets, roles: ROLE_ADMIN, methods: [POST, DELETE] }
+        - { path: ^/api/sets/history, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/api/sets, roles: PUBLIC_ACCESS }
         - { path: ^/api/image, roles: ROLE_ADMIN, methods: POST }
         - { path: ^/api/image/, roles: PUBLIC_ACCESS }

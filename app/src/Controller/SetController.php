@@ -7,7 +7,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bundle\SecurityBundle\Security;
 use App\Entity\Set;
+use App\Entity\SetHistory;
 use App\Entity\Word;
 use App\Entity\User;
 use App\Entity\Image;
@@ -15,6 +17,12 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class SetController extends AbstractController
 {
+    private $security;
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
     #[Route('/api/sets/basic/all', name: 'api_sets_all', methods: ['GET'])]
     public function getSets(EntityManagerInterface $entityManager): JsonResponse
     {
@@ -55,6 +63,12 @@ class SetController extends AbstractController
         if (!$set) {
             return new JsonResponse(['error' => 'Set not found'], JsonResponse::HTTP_NOT_FOUND);
         }
+        $currentUser  = $this->security->getUser();
+
+        if ($currentUser) {
+            $entityManager->getRepository(SetHistory::class)->updateSetHistory($set, $currentUser);
+        }
+
         $image = $set->getImage();
 
         $responseData = [
@@ -148,6 +162,46 @@ class SetController extends AbstractController
                 'word_count' => $set->getWordCount(),
                 'image' => $image ? $image->getId() : null,
                 'words' => $wordsData
+            ];
+        }
+
+        return new JsonResponse($responseData, JsonResponse::HTTP_OK);
+    }
+
+
+    #[Route('/api/sets/history/get', name: 'api_sets_history', methods: ['GET'])]
+    public function getSetHistory(EntityManagerInterface $entityManager): JsonResponse
+    {
+        $currentUser = $this->security->getUser();
+
+        if (!$currentUser) {
+            return new JsonResponse(['error' => 'User not authenticated'], JsonResponse::HTTP_UNAUTHORIZED);
+        }
+
+        $setHistoryRecords = $entityManager->getRepository(SetHistory::class)->getUserSetHistory($currentUser);
+
+        $responseData = [];
+
+        foreach ($setHistoryRecords as $setHistory) {
+            $set = $setHistory->getSet();
+            $image = $set->getImage();
+
+            $wordsData = [];
+            foreach ($set->getWords() as $word) {
+                $wordsData[] = [
+                    'word_id' => $word->getId(),
+                    'word_en' => $word->getWordEn(),
+                    'word_pl' => $word->getWordPl()
+                ];
+            }
+
+            $responseData[] = [
+                'id' => $set->getId(),
+                'set_name' => $set->getName(),
+                'word_count' => $set->getWordCount(),
+                'image' => $image ? $image->getId() : null,
+                'words' => $wordsData,
+                'last_accessed' => $setHistory->getTimestamp()->format('Y-m-d H:i:s')
             ];
         }
 

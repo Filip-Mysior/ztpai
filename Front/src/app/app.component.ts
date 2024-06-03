@@ -24,6 +24,7 @@ import { UserService } from './services/user.service';
 })
 export class AppComponent  {
     title = "Fiszlet";
+    dropdownOpen = false;
 
     constructor(
         private router: Router,
@@ -47,5 +48,9 @@ export class AppComponent  {
 
     public isUserAdmin(): boolean {
         return this.userService.isUserAdmin();
+    }
+
+    toggleDropdown() {
+        this.dropdownOpen = !this.dropdownOpen;
     }
 }

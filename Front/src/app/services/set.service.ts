@@ -7,13 +7,13 @@ import { catchError } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class SetService {
-    private api = 'http://localhost:8000/api/sets/basic';
-    private apiDel = 'http://localhost:8000/api/sets';
+    private api = 'http://localhost:8000/api/sets';
+    private apiBasic = 'http://localhost:8000/api/sets/basic';
 
     constructor(private http: HttpClient) { }
 
     getSets(): Observable<any> {
-        return this.http.get<any>(`${this.api}/all`).pipe(
+        return this.http.get<any>(`${this.apiBasic}/all`).pipe(
             catchError(error => {
                 console.error('Error fetching JSON data:', error);
                 return throwError(()=> new Error('Something went wrong; please try again later.'));
@@ -22,7 +22,7 @@ export class SetService {
     }
 
     getSet(setId: number): Observable<any> {
-        return this.http.get<any>(`${this.api}/${setId}`).pipe(
+        return this.http.get<any>(`${this.apiBasic}/${setId}`).pipe(
             catchError(error => {
                 console.error('Error fetching JSON data:', error);
                 return throwError(()=> new Error('Something went wrong; please try again later.'));
@@ -31,7 +31,7 @@ export class SetService {
     }
 
     addSet(formData: FormData): Observable<any> {
-        return this.http.post<any>(`${this.api}/add`, formData).pipe(
+        return this.http.post<any>(`${this.apiBasic}/add`, formData).pipe(
             catchError(error => {
                 console.error('Error adding set:', error);
                 return throwError(() => new Error('Failed to add set.'));
@@ -40,7 +40,7 @@ export class SetService {
     }
 
     deleteSet(setId: number): Observable<any> {
-        return this.http.delete<any>(`${this.apiDel}/${setId}`).pipe(
+        return this.http.delete<any>(`${this.api}/${setId}`).pipe(
           catchError(error => {
             console.error('Error deleting set:', error);
             return throwError(() => new Error('Failed to delete set.'));
@@ -49,10 +49,19 @@ export class SetService {
     }
 
     searchSets(searchTerm: string): Observable<any> {
-        return this.http.get<any>(`${this.apiDel}/search/name?name=${searchTerm}`).pipe(
+        return this.http.get<any>(`${this.api}/search/name?name=${searchTerm}`).pipe(
             catchError(error => {
                 console.error('Error searching sets:', error);
                 return throwError(() => new Error('Failed to search sets.'));
+            })
+        );
+    }
+
+    getHistory(): Observable<any> {
+        return this.http.get<any>(`${this.api}/history/get`).pipe(
+            catchError(error => {
+                console.error('Error fetching JSON data:', error);
+                return throwError(()=> new Error('Something went wrong; please try again later.'));
             })
         );
     }

@@ -47,7 +47,7 @@ class SecurityController extends AbstractController
         $user->setPassword($hashedPassword);
         
         $user->setProfilePicturePath("assets/profile.png");
-        // $user->setUserType($userType);
+        $user->setRoles(["ROLE_USER"]);
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();
