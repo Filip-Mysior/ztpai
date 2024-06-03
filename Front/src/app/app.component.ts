@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener  } from '@angular/core';
 import { RouterOutlet, Router } from '@angular/router';
 
 import { HomeComponent } from './pages/home/home.component';
@@ -52,5 +52,17 @@ export class AppComponent  {
 
     toggleDropdown() {
         this.dropdownOpen = !this.dropdownOpen;
+    }
+
+    hideDropdown() {
+        this.dropdownOpen = false;
+    }
+
+    @HostListener('document:click', ['$event'])
+    onDocumentClick(event: MouseEvent) {
+        const target = event.target as HTMLElement;
+        if (!target.closest('.profileImg')) {
+            this.hideDropdown();
+        }
     }
 }

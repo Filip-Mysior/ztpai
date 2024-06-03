@@ -33,7 +33,8 @@
             <span id="wordEn">{{ word.word_en }}</span>
             <span id="wordPl">{{ word.word_pl }}</span>
             @if (isUserAdmin()) {
-                <button class="deleteElement" (click)="deleteWord(word.word_id, $event)">Delete</button>
+                <!-- <button class="deleteElement" (click)="deleteWord(word.word_id, $event)">Delete</button> -->
+                <img src="assets/delete.svg" class="deleteElement" (click)="deleteWord(word.word_id, $event)" alt="Delete Set">
             }
         </div>
     }

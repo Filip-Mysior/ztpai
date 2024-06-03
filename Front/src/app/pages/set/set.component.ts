@@ -69,7 +69,10 @@ export class SetComponent {
     }
 
     getImageUrl(imageId: number): string {
-        return this.imageService.getImageUrl(imageId);
+        if (imageId !== undefined) {
+            return this.imageService.getImageUrl(imageId);
+        }
+        return '';
     }
 
     deleteWord(wordId: number, event: MouseEvent) {

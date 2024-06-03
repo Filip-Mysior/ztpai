@@ -6,15 +6,14 @@
     }
     @if (isUserLoggedIn()) {
         <a display="none" (click)="toggleDropdown()">
-            <img src="assets/profile.png">
+            <img class="profileImg" src="assets/profile.png">
         </a>
         @if (dropdownOpen) { 
-            <div class="dropdown-menu">
+            <div class="dropdownMenu">
                 <a (click)="redirectTo('my-account')">Go to Profile</a>
                 <a (click)="logout()">Logout</a>
             </div>
         }
-        <!-- <a (click)="logout()">Logout</a> -->
     }
 </header>
 
